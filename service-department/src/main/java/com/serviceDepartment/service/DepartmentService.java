@@ -1,7 +1,6 @@
 package com.serviceDepartment.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +19,7 @@ public class DepartmentService {
 
     public Department save(Department department) {
         log.info("Save: {}", department);
-        return  repository.save(department);
+        return repository.save(department);
     }
 
     public Department getOne(Integer id) {
@@ -31,4 +30,5 @@ public class DepartmentService {
     public List<Department> findAll() {
         return repository.findAll();
     }
+
 }
