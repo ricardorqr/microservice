@@ -252,7 +252,7 @@ microservice
 
 ### 3. H2
 
-To make H2 Console work, you have to change the property `spring.datasource.url` in the Spring boot file `application.properties`. Use login `sa` and password `password`.
+To make H2 Console work, you have to change the property `spring.datasource.url` in the Spring boot file `application.properties` on both services. To access the H2 console use the url `<serviceName>/h2` and the login `sa` and password `password`.
 
 Windows:
 ```
