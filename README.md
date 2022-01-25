@@ -263,3 +263,17 @@ Linux:
 ```
 spring.datasource.url=jdbc:h2:mem:C:/Workspace-IntelliJ/microservice/service-user/userdb
 ```
+
+### 3. Java OpenJDK 11
+
+```aidl
+sudo yum update
+sudo amazon-linux-extras install java-openjdk11
+sudo yum isntall java-11-openjdk-devel
+```
+
+Check installation
+```aidl
+java -version
+javac -version
+```
