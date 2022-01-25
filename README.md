@@ -254,14 +254,24 @@ microservice
 
 To make H2 Console work, you have to change the property `spring.datasource.url` in the Spring boot file `application.properties` on both services. To access the H2 console use the url `<serviceName>/h2` and the login `sa` and password `password`.
 
-Windows:
+User service Windows:
 ```
 spring.datasource.url=jdbc:h2:mem:C:/Workspace-IntelliJ/microservice/service-user/userdb
 ```
 
-Linux:
+User service Linux:
 ```
-spring.datasource.url=jdbc:h2:mem:C:/Workspace-IntelliJ/microservice/service-user/userdb
+spring.datasource.url=jdbc:h2:mem:/home/ec2-user/userdb
+```
+
+Department service Windows:
+```
+spring.datasource.url=jdbc:h2:mem:C:/Workspace-IntelliJ/microservice/service-user/departmentdb
+```
+
+Department service Linux:
+```
+spring.datasource.url=jdbc:h2:mem:/home/ec2-user/departmentdb
 ```
 
 ### 3. Java OpenJDK 11
