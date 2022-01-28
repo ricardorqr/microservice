@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.serviceUser.dtos.UserResponse;
 import com.serviceUser.entity.User;
 import com.serviceUser.service.UserService;
 
@@ -34,7 +35,7 @@ public class UserController {
 
     @Operation(summary = "Find a user by id")
     @GetMapping("/{id}")
-    public User get(@Parameter(description = "User id") @PathVariable Integer id) {
+    public UserResponse get(@Parameter(description = "User id") @PathVariable Integer id) {
         log.info("Get: {}", id);
         return userService.get(id);
     }
