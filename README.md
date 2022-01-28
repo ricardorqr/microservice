@@ -11,7 +11,6 @@ microservice (root project)
 |   |   pom.xml
 |   |   README.md
 |   |
-|   |
 |   +---src (java code)
 |
 +---service-user (user microservice)
