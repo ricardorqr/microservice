@@ -1,121 +1,53 @@
 # Microservice Model
 
-This is a model project for microservices using Spring Boot.
+This project is a microservice model that may be used as a prototype for futures microservice projects. It has two microservices: Department and User. The root project is a Spring Boot project and the microservices are Spring Boot projects. On another word, each microservice Module is a submodule of the root project. Below you can see the final result.
+
+```text
+microservice (root project)
+|   pom.xml
+|   README.md
+|
++---service-department (department microservice)
+|   |   pom.xml
+|   |   README.md
+|   |
+|   |
+|   +---src (java code)
+|
++---service-user (user microservice)
+    |   pom.xml
+    |   README.md
+    |
+    +---src (java code)
+```
 
 ## Architecture
 
 ![Microservice Architecture](pics/Microservice.png)
 
-- Service Registry - All microservices are connected to the Service Registry.
+- Service Registry - All microservices are registered to the Service Registry. This serve manages all the service names and ports.
 - API Gateway - It is a gateway for all APIs. All the requests should go to this API gateway. It is responsible to travel the request to the right API.
 - Hystrix Dashboard - Manage all API. Identify which microservice is or not working.
 
 ## Settings
 
-### 1. Root Project
+### 1. Libs
 
 Create a new Spring Boot project with the dependencies below:
 - Spring Web
 - Spring Data JPA
+- Spring Cloud
+  - Eureka
 - Lombok
 - H2
 
-###### Directories tree of the architecture
-```aidl
-microservice
-|   pom.xml
-|   README.md
-```
-
 ###### Root project pow.xml
-```XML
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.3</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-
-    <groupId>microservice</groupId>
-    <artifactId>microservice</artifactId>
-    <version>1.0</version>
-    <packaging>pom</packaging>
-
-    <modules>
-        <module>service-department</module>
-        <module>service-user</module>
-    </modules>
-
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-    </properties>
-
-    <dependencies>
-        <!-- Swagger -->
-        <dependency>
-            <groupId>org.springdoc</groupId>
-            <artifactId>springdoc-openapi-ui</artifactId>
-            <version>1.6.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <scope>runtime</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <optional>true</optional>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <excludes>
-                        <exclude>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </exclude>
-                    </excludes>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
-
-</project>
-```
-
-The configuration below is the Spring Boot settings.
+The root [pom.xml](/pom.xml) has the Spring Boot `parent` and `build` tags. Those tags allow Maven to import Spring Boot dependencies.
 ```xml
+.
+.
+.
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
@@ -141,140 +73,133 @@ The configuration below is the Spring Boot settings.
         </plugin>
     </plugins>
 </build>
+.
+.
+.
 ```
 
-The configuration below is the microservices settings. We are creating two microservices `<module>service-department</module>` and `<module>service-user</module>`.
+The `artifactId` and `groupId` has the main project identification. Also, add the `modules` below.
 ```xml
+.
+.
+.
 <groupId>microservice</groupId>
 <artifactId>microservice</artifactId>
 <version>1.0</version>
 <packaging>pom</packaging>
-
+.
+.
+.
 <modules>
     <module>service-department</module>
     <module>service-user</module>
 </modules>
+.
+.
+.
 ```
 
 ### 2. Services
 
-- [Department](/service-department/pom.xml)
-- [User](/service-user/pom.xml)
+Each service is a normal Maven project. Create a new Maven projects (do not create a Spring Boot project), set as parent the root project `microservice` and set the name `service-department`. Do the same for `service-user`.
 
-Create a two new Maven projects. Do not create a Spring Boot project, create a simple Maven project. Create the projects `service-department` and `service-user` as submodules.
-
-###### Directories tree of the architecture
-```aidl
-microservice
-\---service-department
-\---service-user
-|   pom.xml
-|   README.md
-```
+- [Department](/service-department/README.md)
+- [User](/service-user/README.md)
 
 ###### Department Service pow.xml
 
+The Department microservice [pow.xml](/service-department/pom.xml) has the `parent` and `artifactId` tags detailed below
+
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <groupId>microservice</groupId>
-        <artifactId>microservice</artifactId>
-        <version>1.0</version>
-    </parent>
-
-    <artifactId>serviceDepartment</artifactId>
+.
+.
+.
+<parent>
+    <groupId>microservice</groupId>
+    <artifactId>microservice</artifactId>
     <version>1.0</version>
+</parent>
 
-    <properties>
-        <java.version>11</java.version>
-    </properties>
+<artifactId>serviceDepartment</artifactId>
+<version>1.0</version>
 
-</project>
+<properties>
+    <java.version>11</java.version>
+</properties>
+.
+.
+.
 ```
-The Department Service pow has the tag `<parent>` pointing to the root project.
 
 ###### USer Service pow.xml
 
+The User microservice [pow.xml](/service-user/pom.xml) has the `parent` and `artifactId` tags detailed below
+
 ```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <parent>
-        <groupId>microservice</groupId>
-        <artifactId>microservice</artifactId>
-        <version>1.0</version>
-    </parent>
-
-    <artifactId>serviceUser</artifactId>
+.
+.
+.
+<parent>
+    <groupId>microservice</groupId>
+    <artifactId>microservice</artifactId>
     <version>1.0</version>
+</parent>
 
-    <properties>
-        <java.version>11</java.version>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>microservice</groupId>
-            <artifactId>serviceDepartment</artifactId>
-            <version>1.0</version>
-        </dependency>
-    </dependencies>
-
-</project>
-
-```
-The USer Service pow has the tag `<parent>` pointing to the root project and the tag `<dependency>`
-```xml
-<groupId>microservice</groupId>
-<artifactId>serviceDepartment</artifactId>
+<artifactId>serviceUser</artifactId>
 <version>1.0</version>
-```
-pointing to user service. That is necessary to use objects from the Departament service. 
 
-###### Directories tree of the architecture
-```aidl
-microservice
-+---service-department
-|   |   pom.xml
-|   |   README.md
-+---service-user
-|   |   pom.xml
-|   |   README.md
-|   pom.xml
-|   README.md
+<properties>
+    <java.version>11</java.version>
+</properties>
+
+<dependencies>
+    <dependency>
+        <groupId>microservice</groupId>
+        <artifactId>serviceDepartment</artifactId>
+        <version>1.0</version>
+    </dependency>
+</dependencies>
+.
+.
+.
+```
+
+Also, The User microservice has the tag `<dependency>` pointing to the root project. This is necessary to use objects from the Departament service.
+```xml
+<dependency>
+  <groupId>microservice</groupId>
+  <artifactId>serviceDepartment</artifactId>
+  <version>1.0</version>
+</dependency>
 ```
 
 ### 3. H2
 
-To make H2 Console work, you have to change the property `spring.datasource.url` in the Spring boot file `application.properties` on both services. To access the H2 console use the url `<serviceName>/h2` and the login `sa` and password `password`.
+To make H2 Console work, you have to change the property `spring.datasource.url` in the Spring boot file `application.properties` on both microservices. To access the H2 console use the url `/localhost:<port>/<serviceName>/h2` and the login `sa` and password `password`.
 
-User service Windows:
+User service in Windows:
 ```
 spring.datasource.url=jdbc:h2:mem:C:/Workspace-IntelliJ/microservice/service-user/userdb
 ```
 
-User service Linux:
+User service in Linux (need validation):
 ```
 spring.datasource.url=jdbc:h2:mem:/home/ec2-user/userdb
 ```
 
-Department service Windows:
+Department service in Windows:
 ```
 spring.datasource.url=jdbc:h2:mem:C:/Workspace-IntelliJ/microservice/service-user/departmentdb
 ```
 
-Department service Linux:
+Department service in Linux (need validation):
 ```
 spring.datasource.url=jdbc:h2:mem:/home/ec2-user/departmentdb
 ```
 
 ### 3. Java OpenJDK 11
+
+Installation and configuration in Linux.
 
 ```aidl
 sudo yum update
@@ -282,7 +207,8 @@ sudo amazon-linux-extras install java-openjdk11
 sudo yum isntall java-11-openjdk-devel
 ```
 
-Check installation
+Check installation.
+
 ```aidl
 java -version
 javac -version
