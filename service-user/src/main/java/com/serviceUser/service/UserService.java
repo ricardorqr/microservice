@@ -33,11 +33,15 @@ public class UserService {
 
         User user = userRepository.findById(id).orElse(null);
 
-        Department department = restTemplate.getForObject("http://localhost:9001/departments/" + user.getDepartmentId(), Department.class);
-
         UserResponse userResponse = new UserResponse();
         userResponse.setUser(user);
-        userResponse.setDepartment(department);
+
+        if (user != null) {
+            Department department = restTemplate.getForObject("http://localhost:9001/departments/" + user.getDepartmentId(),
+                    Department.class);
+            userResponse.setDepartment(department);
+        }
+
         return userResponse;
     }
 
