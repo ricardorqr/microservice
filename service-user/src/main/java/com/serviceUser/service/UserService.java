@@ -37,7 +37,7 @@ public class UserService {
         userResponse.setUser(user);
 
         if (user != null) {
-            Department department = restTemplate.getForObject("http://localhost:9001/departments/" + user.getDepartmentId(),
+            Department department = restTemplate.getForObject("http://service-department/departments/" + user.getDepartmentId(),
                     Department.class);
             userResponse.setDepartment(department);
         }
