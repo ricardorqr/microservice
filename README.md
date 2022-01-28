@@ -45,18 +45,14 @@ Create a new Spring Boot project with the dependencies below:
 
 The root [pom.xml](/pom.xml) has the Spring Boot `parent` and `build` tags. Those tags allow Maven to import Spring Boot dependencies.
 ```xml
-.
-.
-.
+...
 <parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.6.3</version>
     <relativePath/> <!-- lookup parent from repository -->
 </parent>
-.
-.
-.
+...
 <build>
     <plugins>
         <plugin>
@@ -73,30 +69,22 @@ The root [pom.xml](/pom.xml) has the Spring Boot `parent` and `build` tags. Thos
         </plugin>
     </plugins>
 </build>
-.
-.
-.
+...
 ```
 
 The `artifactId` and `groupId` has the main project identification. Also, add the `modules` below.
 ```xml
-.
-.
-.
+...
 <groupId>microservice</groupId>
 <artifactId>microservice</artifactId>
 <version>1.0</version>
 <packaging>pom</packaging>
-.
-.
-.
+...
 <modules>
     <module>service-department</module>
     <module>service-user</module>
 </modules>
-.
-.
-.
+...
 ```
 
 ### 2. Services
@@ -111,9 +99,7 @@ Each service is a normal Maven project. Create a new Maven projects (do not crea
 The Department microservice [pow.xml](/service-department/pom.xml) has the `parent` and `artifactId` tags detailed below
 
 ```xml
-.
-.
-.
+...
 <parent>
     <groupId>microservice</groupId>
     <artifactId>microservice</artifactId>
@@ -126,9 +112,7 @@ The Department microservice [pow.xml](/service-department/pom.xml) has the `pare
 <properties>
     <java.version>11</java.version>
 </properties>
-.
-.
-.
+...
 ```
 
 ###### USer Service pow.xml
@@ -136,9 +120,7 @@ The Department microservice [pow.xml](/service-department/pom.xml) has the `pare
 The User microservice [pow.xml](/service-user/pom.xml) has the `parent` and `artifactId` tags detailed below
 
 ```xml
-.
-.
-.
+...
 <parent>
     <groupId>microservice</groupId>
     <artifactId>microservice</artifactId>
@@ -159,9 +141,7 @@ The User microservice [pow.xml](/service-user/pom.xml) has the `parent` and `art
         <version>1.0</version>
     </dependency>
 </dependencies>
-.
-.
-.
+...
 ```
 
 Also, The User microservice has the tag `<dependency>` pointing to the root project. This is necessary to use objects from the Departament service.
@@ -178,22 +158,26 @@ Also, The User microservice has the tag `<dependency>` pointing to the root proj
 To make H2 Console work, you have to change the property `spring.datasource.url` in the Spring boot file `application.properties` on both microservices. To access the H2 console use the url `/localhost:<port>/<serviceName>/h2` and the login `sa` and password `password`.
 
 User service in Windows:
-```
+
+```text
 spring.datasource.url=jdbc:h2:mem:C:/Workspace-IntelliJ/microservice/service-user/userdb
 ```
 
 User service in Linux (need validation):
-```
+
+```text
 spring.datasource.url=jdbc:h2:mem:/home/ec2-user/userdb
 ```
 
 Department service in Windows:
-```
+
+```text
 spring.datasource.url=jdbc:h2:mem:C:/Workspace-IntelliJ/microservice/service-user/departmentdb
 ```
 
 Department service in Linux (need validation):
-```
+
+```text
 spring.datasource.url=jdbc:h2:mem:/home/ec2-user/departmentdb
 ```
 
@@ -201,7 +185,7 @@ spring.datasource.url=jdbc:h2:mem:/home/ec2-user/departmentdb
 
 Installation and configuration in Linux.
 
-```aidl
+```text
 sudo yum update
 sudo amazon-linux-extras install java-openjdk11
 sudo yum isntall java-11-openjdk-devel
@@ -209,7 +193,7 @@ sudo yum isntall java-11-openjdk-devel
 
 Check installation.
 
-```aidl
+```text
 java -version
 javac -version
 ```
