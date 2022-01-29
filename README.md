@@ -13,6 +13,12 @@ microservice (root project)
 |   |
 |   +---src (java code)
 |
++---service-registry (service registry)
+    |   pom.xml
+    |   README.md
+    |
+    +---src (java code)
+|
 +---service-user (user microservice)
     |   pom.xml
     |   README.md
@@ -24,6 +30,7 @@ microservice (root project)
 
 ![Microservice Architecture](pics/Microservice.png)
 
+- User and department microservices - 2 simple microservices.
 - Service Registry - All microservices are registered to the Service Registry. This serve manages all the service names and ports.
 - API Gateway - It is a gateway for all APIs. All the requests should go to this API gateway. It is responsible to travel the request to the right API.
 - Hystrix Dashboard - Manage all API. Identify which microservice is or not working.
@@ -143,7 +150,7 @@ The User microservice [pow.xml](/service-user/pom.xml) has the `parent` and `art
 ...
 ```
 
-Also, The User microservice has the tag `<dependency>` pointing to the root project. This is necessary to use objects from the Departament service.
+Also, the User microservice has the tag `<dependency>` pointing to the root project. This is necessary to use objects from the Departament service.
 ```xml
 <dependency>
   <groupId>microservice</groupId>
@@ -198,3 +205,69 @@ javac -version
 ```
 
 ### 4. Service Registry
+
+The Service Registry is an ordinary Maven project created as a submodule of the root project. Create a new Maven projects (do not create a Spring Boot project), set as parent the root project `microservice` and set the name `service-registry`.
+
+- [Service Registry](/service-registry/README.md)
+
+###### Root pow.xml
+
+###### Service Registry pow.xml
+
+The Service Registry [pow.xml](/service-registry/pom.xml) has the `parent` and `artifactId` tags detailed below
+
+```xml
+...
+<parent>
+    <groupId>microservice</groupId>
+    <artifactId>microservice</artifactId>
+    <version>1.0</version>
+</parent>
+
+<artifactId>service-registry</artifactId>
+<version>1.0</version>
+
+<properties>
+    <java.version>11</java.version>
+</properties>
+...
+```
+
+Also, the Service Registry has the tag `<dependency>` below. That is to use Eureka server.
+```xml
+<dependency>
+  <dependency>
+    <groupId>org.springframework.cloud</groupId>
+    <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+  </dependency>
+</dependency>
+```
+
+Add the `modules` below.
+
+```xml
+<module>service-registry</module>
+```
+
+The tag `<properties>` has the tag below
+
+```xml
+<spring-cloud.version>2021.0.0</spring-cloud.version>
+```
+
+Also, add the Spring Cloud dependencies.
+
+```xml
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring-cloud.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+
