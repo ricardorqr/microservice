@@ -196,3 +196,5 @@ Check installation.
 java -version
 javac -version
 ```
+
+### 4. Service Registry
