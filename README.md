@@ -90,6 +90,16 @@ The root [pom.xml](/pom.xml) has the Spring Boot `parent`, `<dependencyManagemen
 ...
 ```
 
+The `<spring-cloud.version>` tag is used to set the Spring Cloud version.
+
+```xml
+<properties>
+    <maven.compiler.source>11</maven.compiler.source>
+    <maven.compiler.target>11</maven.compiler.target>
+    <spring-cloud.version>2021.0.0</spring-cloud.version>
+</properties>
+```
+
 The `groupId`, `artifactId`, `version` and `<packaging>` has the root project identification.
 
 ```xml
