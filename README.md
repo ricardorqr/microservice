@@ -207,7 +207,7 @@ The Service Registry is a normal Maven project created as a submodule of the roo
 </parent>
 ```
 
-Also, the `artifactId` tags is detailed below.
+Also, the `artifactId` tag is detailed below.
 ```xml
 <artifactId>service-registry</artifactId>
 ```
