@@ -131,8 +131,8 @@ Each service is a normal Maven project created as a submodule of the root projec
 </parent>
 ```
 
-- [Department](/service-department/README.md)
-- [User](/service-user/README.md)
+- [Department Swagger](http://localhost:9001/departments/swagger-ui/index.html)
+- [User Swagger](http://localhost:9002/users/swagger-ui/index.html)
 
 ###### Department Service pow.xml
 
