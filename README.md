@@ -253,6 +253,19 @@ eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
 eureka.instance.hostname=localhost
 ```
 
+The bean `RestTemplate` in the class [Configurations](/service-user/src/main/java/com/serviceUser/configuration/Configurations.java) needs the annotation `@LoadBalanced`.
+```java
+@Configuration
+public class Configurations {
+
+    @Bean
+    @LoadBalanced
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
+
+}
+```
 
 - [Service Registry](/service-registry/README.md)
 
