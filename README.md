@@ -131,9 +131,6 @@ Each service is a normal Maven project created as a submodule of the root projec
 </parent>
 ```
 
-- [Department Swagger](http://localhost:9001/departments/swagger-ui/index.html)
-- [User Swagger](http://localhost:9002/users/swagger-ui/index.html)
-
 ###### Department Service pow.xml
 
 The Department microservice [pow.xml](/service-department/pom.xml) has the `artifactId` tags detailed below
@@ -160,9 +157,19 @@ Also, the User microservice has the tag `<dependency>` pointing to the root proj
 </dependency>
 ```
 
-### 3. H2
+### 3. Swagger
+
+- [Department Swagger](http://localhost:9001/departments/swagger-ui/index.html)
+- [User Swagger](http://localhost:9002/users/swagger-ui/index.html)
+
+# TODO: 
+
+### 4. H2
 
 To make H2 Console work, you have to change the property `spring.datasource.url` in the Spring boot file `application.properties` on both microservices. To access the H2 console use the url `/localhost:<port>/<serviceName>/h2` and the login `sa` and password `password`.
+
+- [Department H2](http://localhost:9001/departments/h2)
+- [User H2](http://localhost:9002/users/swagger-ui/h2)
 
 User service in Windows:
 
@@ -188,7 +195,7 @@ Department service in Linux (need validation):
 spring.datasource.url=jdbc:h2:mem:/home/ec2-user/departmentdb
 ```
 
-### 3. Java OpenJDK 11
+### 5. Java OpenJDK 11
 
 Installation and configuration in Linux.
 
@@ -205,7 +212,7 @@ java -version
 javac -version
 ```
 
-### 4. Service Registry
+### 6. Service Registry
 
 The Service Registry is a normal Maven project created as a submodule of the root project. The Service Registry [pow.xml](/service-registry/pom.xml) has the `<parent>` tag pointing to the root project.
 
