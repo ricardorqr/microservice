@@ -209,6 +209,10 @@ javac -version
 
 The Service Registry is a normal Maven project created as a submodule of the root project. The Service Registry [pow.xml](/service-registry/pom.xml) has the `<parent>` tag pointing to the root project.
 
+Use the following URL to access the Spring Eureka console: [http://localhost:8761/](http://localhost:8761/)
+
+![Microservice Architecture](pics/Eureka.png)
+
 ```xml
 <parent>
     <artifactId>microservice</artifactId>
@@ -227,6 +231,7 @@ The Service Registry [application.properties](/service-department/src/main/resou
 ```properties
 server.port=8761
 spring.application.name=eureka-server
+
 eureka.client.register-with-eureka=false
 eureka.client.fetch-registry=false
 ```
@@ -267,7 +272,28 @@ public class Configurations {
 }
 ```
 
-- [Service Registry](/service-registry/README.md)
+The classes [ServiceDepartmentApplication](/service-department/src/main/java/com/serviceDepartment/ServiceDepartmentApplication.java) and [ServiceUserApplication](/service-user/src/main/java/com/serviceUser/ServiceUserApplication.java) needs the annotation `@EnableEurekaClient`.
+
+```java
+@SpringBootApplication
+@EnableEurekaClient
+@OpenAPIDefinition(...)
+public class ServiceUserApplication { ... }
+```
+
+The classes [ServiceRegistryApplication](/service-registry/src/main/java/com/serviceRegisrtry/ServiceRegistryApplication.java) needs the annotation `@EnableEurekaServer`.
+
+```java
+@SpringBootApplication
+@EnableEurekaServer
+public class ServiceRegistryApplication { ... }
+```
+
+Now, the bean `restTemplate` can use the registered URL `http://service-department/` already mapped. You no longer need to take care with ports and service names anymore.
+
+```java
+Department department = restTemplate.getForObject("http://service-department/departments/" + user.getDepartmentId(),
+```
 
 # Resources
 
