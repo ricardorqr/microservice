@@ -1,6 +1,6 @@
 # Microservice Model
 
-This project is a microservice model that may be used as a prototype for futures microservice projects. It has two microservices: Department and User. The root project is a Spring Boot project and the microservices are Spring Boot projects. On another word, each microservice Module is a submodule of the root project. Below you can see the final result.
+This project is a microservice model that may be used as a prototype for futures microservice projects. It has two microservices: Department and User. The root project is a Spring Boot project. The microservices and the Service Registry are ordinary Maven projects. Each microservice project is a submodule of the root project. Below you can see the final result.
 
 ```text
 microservice (root project)
@@ -14,10 +14,10 @@ microservice (root project)
 |   +---src (java code)
 |
 +---service-registry (service registry)
-    |   pom.xml
-    |   README.md
-    |
-    +---src (java code)
+|   |   pom.xml
+|   |   README.md
+|   |
+|   +---src (java code)
 |
 +---service-user (user microservice)
     |   pom.xml
@@ -32,7 +32,7 @@ microservice (root project)
 
 - User and department microservices - 2 simple microservices.
 - Service Registry - All microservices are registered to the Service Registry. This serve manages all the service names and ports.
-- API Gateway - It is a gateway for all APIs. All the requests should go to this API gateway. It is responsible to travel the request to the right API.
+- API Gateway - It is a gateway for all APIs. All the requests should go to this API gateway. It is responsible to travel the requests to the right API.
 - Hystrix Dashboard - Manage all API. Identify which microservice is or not working.
 
 ## Settings
@@ -49,7 +49,7 @@ Create a new Spring Boot project with the dependencies below:
 
 ###### Root project pow.xml
 
-The root [pom.xml](/pom.xml) has the Spring Boot `parent` and `build` tags. Those tags allow Maven to import Spring Boot dependencies.
+The root [pom.xml](/pom.xml) has the Spring Boot `parent`, `<dependencyManagement>` and `build` tags. Those tags allow Maven to import Spring Boot dependencies on the submodules.
 ```xml
 ...
 <parent>
@@ -58,6 +58,18 @@ The root [pom.xml](/pom.xml) has the Spring Boot `parent` and `build` tags. Thos
     <version>2.6.3</version>
     <relativePath/> <!-- lookup parent from repository -->
 </parent>
+...
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>${spring-cloud.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
 ...
 <build>
     <plugins>
@@ -78,84 +90,63 @@ The root [pom.xml](/pom.xml) has the Spring Boot `parent` and `build` tags. Thos
 ...
 ```
 
-The `artifactId` and `groupId` has the main project identification. Also, add the `modules` below.
+The `groupId`, `artifactId`, `version` and `<packaging>` has the root project identification.
+
 ```xml
-...
 <groupId>microservice</groupId>
 <artifactId>microservice</artifactId>
 <version>1.0</version>
 <packaging>pom</packaging>
-...
+```
+
+Also, the `modules` has the name for all submodules.
+
+```xml
 <modules>
     <module>service-department</module>
     <module>service-user</module>
+    <module>service-registry</module>
 </modules>
-...
 ```
 
 ### 2. Services
 
-Each service is a normal Maven project. Create a new Maven projects (do not create a Spring Boot project), set as parent the root project `microservice` and set the name `service-department`. Do the same for `service-user`.
+Each service is a normal Maven project created as a submodule of the root project. The `<parent>` tag should point to the root project.
+
+```xml
+<parent>
+    <groupId>microservice</groupId>
+    <artifactId>microservice</artifactId>
+    <version>1.0</version>
+</parent>
+```
 
 - [Department](/service-department/README.md)
 - [User](/service-user/README.md)
 
 ###### Department Service pow.xml
 
-The Department microservice [pow.xml](/service-department/pom.xml) has the `parent` and `artifactId` tags detailed below
+The Department microservice [pow.xml](/service-department/pom.xml) has the `artifactId` tags detailed below
 
 ```xml
-...
-<parent>
-    <groupId>microservice</groupId>
-    <artifactId>microservice</artifactId>
-    <version>1.0</version>
-</parent>
-
 <artifactId>serviceDepartment</artifactId>
-<version>1.0</version>
-
-<properties>
-    <java.version>11</java.version>
-</properties>
-...
 ```
 
-###### USer Service pow.xml
+###### User Service pow.xml
 
-The User microservice [pow.xml](/service-user/pom.xml) has the `parent` and `artifactId` tags detailed below
+The User microservice [pow.xml](/service-user/pom.xml) has the `artifactId` tags detailed below
 
 ```xml
-...
-<parent>
-    <groupId>microservice</groupId>
-    <artifactId>microservice</artifactId>
-    <version>1.0</version>
-</parent>
-
 <artifactId>serviceUser</artifactId>
-<version>1.0</version>
-
-<properties>
-    <java.version>11</java.version>
-</properties>
-
-<dependencies>
-    <dependency>
-        <groupId>microservice</groupId>
-        <artifactId>serviceDepartment</artifactId>
-        <version>1.0</version>
-    </dependency>
-</dependencies>
-...
 ```
 
 Also, the User microservice has the tag `<dependency>` pointing to the root project. This is necessary to use objects from the Departament service.
+
 ```xml
 <dependency>
-  <groupId>microservice</groupId>
-  <artifactId>serviceDepartment</artifactId>
-  <version>1.0</version>
+    <groupId>microservice</groupId>
+    <artifactId>serviceDepartment</artifactId>
+    <version>1.0</version>
 </dependency>
 ```
 
@@ -206,68 +197,30 @@ javac -version
 
 ### 4. Service Registry
 
-The Service Registry is an ordinary Maven project created as a submodule of the root project. Create a new Maven projects (do not create a Spring Boot project), set as parent the root project `microservice` and set the name `service-registry`.
+The Service Registry is a normal Maven project created as a submodule of the root project. The Service Registry [pow.xml](/service-department/pom.xml) has the `<parent>` tag pointing to the root project.
+
+```xml
+<parent>
+    <artifactId>microservice</artifactId>
+    <groupId>microservice</groupId>
+    <version>1.0</version>
+</parent>
+```
+
+Also, the `artifactId` tags is detailed below.
+```xml
+<artifactId>service-registry</artifactId>
+```
 
 - [Service Registry](/service-registry/README.md)
 
-###### Root pow.xml
+# Resources
 
-###### Service Registry pow.xml
 
-The Service Registry [pow.xml](/service-registry/pom.xml) has the `parent` and `artifactId` tags detailed below
-
-```xml
-...
-<parent>
-    <groupId>microservice</groupId>
-    <artifactId>microservice</artifactId>
-    <version>1.0</version>
-</parent>
-
-<artifactId>service-registry</artifactId>
-<version>1.0</version>
-
-<properties>
-    <java.version>11</java.version>
-</properties>
-...
-```
-
-Also, the Service Registry has the tag `<dependency>` below. That is to use Eureka server.
-```xml
-<dependency>
-  <dependency>
-    <groupId>org.springframework.cloud</groupId>
-    <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-  </dependency>
-</dependency>
-```
-
-Add the `modules` below.
-
-```xml
-<module>service-registry</module>
-```
-
-The tag `<properties>` has the tag below
-
-```xml
-<spring-cloud.version>2021.0.0</spring-cloud.version>
-```
-
-Also, add the Spring Cloud dependencies.
-
-```xml
-<dependencyManagement>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-dependencies</artifactId>
-            <version>${spring-cloud.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
-        </dependency>
-    </dependencies>
-</dependencyManagement>
-```
-
+https://www.youtube.com/watch?v=p485kUNpPvE
+https://www.youtube.com/watch?v=QWOgkI4DuE8
+https://www.youtube.com/watch?v=-gLLeoS1m6s&t=233s
+https://www.youtube.com/watch?v=C2NLPQTvO9M
+https://www.youtube.com/watch?v=nFxjaVmFj5E
+https://www.youtube.com/watch?v=BnknNTN8icw&t=2610s
+https://www.baeldung.com/spring-boot-app-as-a-service
