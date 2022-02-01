@@ -217,10 +217,42 @@ The Service Registry is a normal Maven project created as a submodule of the roo
 </parent>
 ```
 
-Also, the `artifactId` tag is detailed below.
+The `artifactId` tag is detailed below.
 ```xml
 <artifactId>service-registry</artifactId>
 ```
+
+The Service Registry [application.properties](/service-department/src/main/resources/application.properties) has the properties below.
+
+```properties
+server.port=8761
+spring.application.name=eureka-server
+eureka.client.register-with-eureka=false
+eureka.client.fetch-registry=false
+```
+
+The Department [application.properties](/service-department/src/main/resources/application.properties) have the properties below.
+
+```properties
+spring.application.name=service-department
+
+eureka.client.register-with-eureka=true
+eureka.client.fetch-registry=true
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka
+eureka.instance.hostname=localhost
+```
+
+The User [application.properties](/service-user/src/main/resources/application.properties) have the properties below.
+
+```properties
+spring.application.name=service-user
+
+eureka.client.register-with-eureka=true
+eureka.client.fetch-registry=true
+eureka.client.service-url.defaultZone=http://localhost:8761/eureka/
+eureka.instance.hostname=localhost
+```
+
 
 - [Service Registry](/service-registry/README.md)
 
