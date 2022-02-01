@@ -197,7 +197,7 @@ javac -version
 
 ### 4. Service Registry
 
-The Service Registry is a normal Maven project created as a submodule of the root project. The Service Registry [pow.xml](/service-department/pom.xml) has the `<parent>` tag pointing to the root project.
+The Service Registry is a normal Maven project created as a submodule of the root project. The Service Registry [pow.xml](/service-registry/pom.xml) has the `<parent>` tag pointing to the root project.
 
 ```xml
 <parent>
@@ -216,11 +216,10 @@ Also, the `artifactId` tags is detailed below.
 
 # Resources
 
-
-https://www.youtube.com/watch?v=p485kUNpPvE
-https://www.youtube.com/watch?v=QWOgkI4DuE8
-https://www.youtube.com/watch?v=-gLLeoS1m6s&t=233s
-https://www.youtube.com/watch?v=C2NLPQTvO9M
-https://www.youtube.com/watch?v=nFxjaVmFj5E
-https://www.youtube.com/watch?v=BnknNTN8icw&t=2610s
-https://www.baeldung.com/spring-boot-app-as-a-service
+1. https://www.youtube.com/watch?v=p485kUNpPvE
+1. https://www.youtube.com/watch?v=QWOgkI4DuE8
+1. https://www.youtube.com/watch?v=-gLLeoS1m6s&t=233s
+1. https://www.youtube.com/watch?v=C2NLPQTvO9M
+1. https://www.youtube.com/watch?v=nFxjaVmFj5E
+1. https://www.youtube.com/watch?v=BnknNTN8icw&t=2610s
+1. https://www.baeldung.com/spring-boot-app-as-a-service
