@@ -32,7 +32,7 @@ microservice (root project)
 
 - User and department microservices - 2 simple microservices.
 - Service Registry - All microservices are registered to the Service Registry. This serve manages all the service names and ports.
-- API Gateway - It is a gateway for all APIs. All the requests should go to this API gateway. It is responsible to travel the requests to the right API.
+- API Gateway - It is a gateway for all APIs. All the requests should go to the API gateway. It is responsible to travel the requests to the right API.
 - Hystrix Dashboard - Manage all API. Identify which microservice is or not working.
 
 ## Settings
