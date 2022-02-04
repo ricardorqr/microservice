@@ -5,30 +5,27 @@ import java.util.stream.Collectors;
 
 import com.serviceDepartment.entity.Department;
 import com.serviceDepartment.repository.DepartmentRepository;
-import com.serviceDepartment.service.validation.IValidator;
-import com.serviceDepartment.service.validation.Result;
+import com.serviceDepartment.service.validation.ValidationResult;
+import com.serviceDepartment.service.validation.Validator;
 
-public class DepartmentUniqueNameValidation implements IValidator<Department> {
+public class DepartmentUniqueNameValidation extends Validator<Department> {
 
-    private Department department;
-    private DepartmentRepository departmentRepository;
+    private final DepartmentRepository departmentRepository;
 
-    public DepartmentUniqueNameValidation(Department department, DepartmentRepository departmentRepository) {
-        this.department = department;
+    public DepartmentUniqueNameValidation(DepartmentRepository departmentRepository) {
         this.departmentRepository = departmentRepository;
     }
 
     @Override
-    public Result validate() {
-        if (department != null) {
-            Set<String> departments = departmentRepository.findByName(department.getName()).stream()
-                    .map(Department::getName)
-                    .collect(Collectors.toSet());
-            if (departments.contains(department.getName())) {
-                return new Result(false, "Department has the name " + department.getName());
-            }
+    public ValidationResult validate(Department department) {
+        Set<String> departments = departmentRepository.findByName(department.getName()).stream()
+                .map(Department::getName)
+                .collect(Collectors.toSet());
+
+        if (departments.contains(department.getName())) {
+            return ValidationResult.invalid("Department has the name " + department.getName());
         }
-        return new Result(true, "ok");
+        return checkNext(department);
     }
 
 }

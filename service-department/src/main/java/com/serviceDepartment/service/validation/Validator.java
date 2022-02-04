@@ -1,24 +1,21 @@
 package com.serviceDepartment.service.validation;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+public abstract class Validator<T> {
 
-public class Validator<T> extends ArrayList<IValidator<T>> implements IValidator<T> {
+    private Validator<T> next;
 
-    @SafeVarargs
-    public Validator(IValidator<T>... chain) {
-        addAll(Arrays.asList(chain));
+    public abstract ValidationResult validate(T toValidate);
+
+    public Validator<T> validateNext(Validator<T> next) {
+        this.next = next;
+        return next;
     }
 
-    @Override
-    public Result validate() {
-        for (IValidator<T> validation : this) {
-            Result result = validation.validate();
-            if (result.isCorrect()) {
-                return result;
-            }
+    protected ValidationResult checkNext(T toValidate) {
+        if (next == null) {
+            return ValidationResult.valid();
         }
-        return new Result(false, "");
+        return next.checkNext(toValidate);
     }
 
 }

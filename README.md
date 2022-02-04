@@ -311,3 +311,4 @@ Department department = restTemplate.getForObject("http://service-department/dep
 1. https://www.youtube.com/watch?v=nFxjaVmFj5E
 1. https://www.youtube.com/watch?v=BnknNTN8icw&t=2610s
 1. https://www.baeldung.com/spring-boot-app-as-a-service
+1. https://medium.com/@aleksanderkolata/java-tips-01-handle-validation-in-an-elegant-manner-using-chain-of-responsibility-design-pattern-ad3dcc22479e

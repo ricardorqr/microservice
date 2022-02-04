@@ -7,8 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.serviceDepartment.entity.Department;
 import com.serviceDepartment.repository.DepartmentRepository;
-import com.serviceDepartment.service.validation.Result;
-import com.serviceDepartment.service.validation.Validator;
+import com.serviceDepartment.service.validation.ValidationResult;
 import com.serviceDepartment.service.validation.department.DepartmentUniqueNameValidation;
 
 import lombok.extern.slf4j.Slf4j;
@@ -18,15 +17,15 @@ import lombok.extern.slf4j.Slf4j;
 public class DepartmentService {
 
     @Autowired
-    private DepartmentRepository repository;
+    private DepartmentRepository departmentRepository;
 
     public Department save(Department department) {
         log.info("Save: {}", department);
 
-        Result result = new Validator<Department>(new DepartmentUniqueNameValidation(department, repository)).validate();
+        ValidationResult result = new DepartmentUniqueNameValidation(departmentRepository).validate(department);
 
-        if (result.isCorrect()) {
-            return repository.save(department);
+        if (result.isValid()) {
+            return departmentRepository.save(department);
         }
 
         return null;
@@ -34,11 +33,11 @@ public class DepartmentService {
 
     public Department getOne(Integer id) {
         log.info("getOne: {}", id);
-        return repository.findById(id).orElse(null);
+        return departmentRepository.findById(id).orElse(null);
     }
 
     public List<Department> findAll() {
-        return repository.findAll();
+        return departmentRepository.findAll();
     }
 
 }
