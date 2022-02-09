@@ -7,6 +7,12 @@ microservice (root project)
 |   pom.xml
 |   README.md
 |
++---could-gateway (API gateway)
+|   |   pom.xml
+|   |   README.md
+|   |
+|   +---src (java code)
+|
 +---service-department (department microservice)
 |   |   pom.xml
 |   |   README.md
@@ -33,7 +39,8 @@ microservice (root project)
 - User and department microservices - 2 simple microservices.
 - Service Registry - All microservices are registered to the Service Registry. This serve manages all the service names and ports.
 - API Gateway - It is a gateway for all APIs. All the requests should go to the API gateway. It is responsible to travel the requests to the right API.
-- Hystrix Dashboard - Manage all API. Identify which microservice is or not working.
+- Hystrix Dashboard - Circuit Breaker to manage which services are running. Identify which microservice is down and returns a friendly message to the user.
+- Zipkin - (In progress) Tool to trace log among services.
 
 ## Settings
 

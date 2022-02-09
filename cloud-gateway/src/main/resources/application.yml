@@ -1,0 +1,33 @@
+server:
+  port: 9191
+
+spring:
+  main:
+    web-application-type: reactive # Check
+  application:
+    name: cloud-gateway
+  cloud:
+    gateway:
+      routes:
+        - id: service-user
+          uri: lb://service-user
+          predicates:
+            - Path=/users/**
+        - id: service-department
+          uri: lb://service-department
+          predicates:
+            - Path=/departments/**
+
+# Service Registry Server
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    hostname: localhost
+
+springdoc:
+  api-docs:
+    enabled: false # Check
