@@ -1,6 +1,6 @@
 # Microservice Model
 
-This project is a microservice model that may be used as a prototype for futures microservice projects. It has two microservices: Department and User. The root project is a Spring Boot project. The microservices, Service Registry and the Cloud Gateway are ordinary Maven projects. Each Maven project is a submodule of the root project. Below you can see the final result.
+This project is a microservice model that may be used as a prototype for futures microservice projects. It has two microservices: Department and User. The root project is a Spring Boot project. The microservices, Service Registry, Hystrix Dashboard and the Cloud Gateway are ordinary Maven projects. Each Maven project is a submodule of the root project. Below you can see the final result.
 
 ```text
 microservice (root project)
@@ -8,6 +8,12 @@ microservice (root project)
 |   README.md
 |
 +---could-gateway (API gateway)
+|   |   pom.xml
+|   |   README.md
+|   |
+|   +---src (java code)
+|
++---hystrix-dashboard (Hystrix Dashboard)
 |   |   pom.xml
 |   |   README.md
 |   |
