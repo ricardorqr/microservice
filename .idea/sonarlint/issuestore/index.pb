@@ -15,3 +15,9 @@ s
 Cservice-user/src/main/java/com/serviceUser/service/UserService.java,5\d\5df91b5a67f64d40165a495a1fae56d398a60413
 ƒ
 Sservice-registry/src/main/java/com/serviceRegisrtry/ServiceRegistryApplication.java,b\8\b864a94eea33cc4964564cc1ec8a4c623269c934
+J
+service-department/pom.xml,a\d\ade1cbd776cc245b3533962c10c50cf17c432587
+D
+service-user/pom.xml,3\6\36c1aae2fe34f59bbf5eeb50d0e296b90d906748
+y
+Icloud-gateway/src/main/java/com/cloudGateway/CloudGatewayApplication.java,7\4\74db0aa06808e35aa406b1f3ed55beb2fc304521

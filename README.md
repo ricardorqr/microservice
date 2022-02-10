@@ -1,6 +1,6 @@
 # Microservice Model
 
-This project is a microservice model that may be used as a prototype for futures microservice projects. It has two microservices: Department and User. The root project is a Spring Boot project. The microservices and the Service Registry are ordinary Maven projects. Each microservice project is a submodule of the root project. Below you can see the final result.
+This project is a microservice model that may be used as a prototype for futures microservice projects. It has two microservices: Department and User. The root project is a Spring Boot project. The microservices, Service Registry and the Cloud Gateway are ordinary Maven projects. Each Maven project is a submodule of the root project. Below you can see the final result.
 
 ```text
 microservice (root project)
@@ -39,24 +39,26 @@ microservice (root project)
 - User and department microservices - 2 simple microservices.
 - Service Registry - All microservices are registered to the Service Registry. This serve manages all the service names and ports.
 - API Gateway - It is a gateway for all APIs. All the requests should go to the API gateway. It is responsible to travel the requests to the right API.
-- Hystrix Dashboard - Circuit Breaker to manage which services are running. Identify which microservice is down and returns a friendly message to the user.
+- Hystrix Dashboard - Circuit Breaker to manage which services are running. It Identifies which microservice is down and returns a friendly message to the user.
 - Zipkin - (In progress) Tool to trace log among services.
 
 ## Settings
 
 ### 1. Libs
 
-Create a new Spring Boot project with the dependencies below:
+Below are a few used libs:
 - Spring Web
 - Spring Data JPA
 - Spring Cloud
   - Eureka
+  - Hystrix
 - Lombok
 - H2
+- Zipkin
 
 ###### Root project pow.xml
 
-The root [pom.xml](/pom.xml) has the Spring Boot `parent`, `<dependencyManagement>` and `build` tags. Those tags allow Maven to import Spring Boot dependencies on the submodules.
+The root [pom.xml](/pom.xml) has the Spring Boot `<parent>`, `<dependencyManagement>` and `<build>` tags. Those tags allow Maven to import Spring Boot dependencies into the submodules.
 ```xml
 ...
 <parent>
@@ -107,7 +109,7 @@ The `<spring-cloud.version>` tag is used to set the Spring Cloud version.
 </properties>
 ```
 
-The `groupId`, `artifactId`, `version` and `<packaging>` has the root project identification.
+The `<groupId>`, `<artifactId>`, `<version>` and `<packaging>` has the root project identification.
 
 ```xml
 <groupId>microservice</groupId>
@@ -116,13 +118,14 @@ The `groupId`, `artifactId`, `version` and `<packaging>` has the root project id
 <packaging>pom</packaging>
 ```
 
-Also, the `modules` has the name for all submodules.
+Also, the `<modules>` has the name for all submodules.
 
 ```xml
 <modules>
     <module>service-department</module>
     <module>service-user</module>
     <module>service-registry</module>
+    <module>cloud-gateway</module>
 </modules>
 ```
 
@@ -140,7 +143,7 @@ Each service is a normal Maven project created as a submodule of the root projec
 
 ###### Department Service pow.xml
 
-The Department microservice [pow.xml](/service-department/pom.xml) has the `artifactId` tags detailed below
+The Department microservice [pow.xml](/service-department/pom.xml) has the `<artifactId>` tags detailed below
 
 ```xml
 <artifactId>serviceDepartment</artifactId>
@@ -148,13 +151,13 @@ The Department microservice [pow.xml](/service-department/pom.xml) has the `arti
 
 ###### User Service pow.xml
 
-The User microservice [pow.xml](/service-user/pom.xml) has the `artifactId` tags detailed below
+The User microservice [pow.xml](/service-user/pom.xml) has the `<artifactId>` tags detailed below
 
 ```xml
 <artifactId>serviceUser</artifactId>
 ```
 
-Also, the User microservice has the tag `<dependency>` pointing to the root project. This is necessary to use objects from the Departament service.
+Also, the User microservice has the tag `<dependency>` pointing to the root project. This is necessary to use objects from the Department service.
 
 ```xml
 <dependency>
@@ -169,7 +172,7 @@ Also, the User microservice has the tag `<dependency>` pointing to the root proj
 - [Department Swagger](http://localhost:9001/departments/swagger-ui/index.html)
 - [User Swagger](http://localhost:9002/users/swagger-ui/index.html)
 
-# TODO: 
+TODO: Update
 
 ### 4. H2
 
@@ -235,7 +238,7 @@ Use the following URL to access the Spring Eureka console: [http://localhost:876
 </parent>
 ```
 
-The `artifactId` tag is detailed below.
+The `<artifactId>` tag is detailed below.
 ```xml
 <artifactId>service-registry</artifactId>
 ```
