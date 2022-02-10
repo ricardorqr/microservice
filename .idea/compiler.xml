@@ -11,12 +11,14 @@
         <module name="service-user" />
         <module name="service-registry" />
         <module name="cloud-gateway" />
+        <module name="hystrix-dashboard" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="cloud-gateway" options="-parameters" />
+      <module name="hystrix-dashboard" options="-parameters" />
       <module name="service-department" options="-parameters" />
       <module name="service-registry" options="-parameters" />
       <module name="service-user" options="-parameters" />
